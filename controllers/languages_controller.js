@@ -50,6 +50,15 @@ languages.get('/', (req, res) => {
         })
 })
 
+languages.get('/random', async (req, res)=>{
+    let count = await Language.countDocuments()
+    let random = Math.floor(Math.random() * count)
+    Language.findOne().skip(random)
+    .then(foundLanguage => {
+        res.json(foundLanguage)
+    })
+})
+
 // Show:
 languages.get('/:name', (req, res) => {
     Language.findOne({ name: req.params.name.toLowerCase() })
